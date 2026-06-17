@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+out/
+dist/
+dist-electron/
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Supabase local (docker volumes / generated)
+supabase/.temp/
+supabase/.branches/
+
+# Local asset cache (downloaded encrypted tokens/audio)
+.cache/
+
+# Per-run app logs
+logs/
+
+# Second-client profile dir for local multiplayer testing
+.tmp/

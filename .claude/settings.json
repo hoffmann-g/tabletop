@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git rm *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm build *)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -o /dev/null -w 'auth settings HTTP: %{http_code}\\\\n' -H 'apikey: sb_publishable_WhW5KrUcqyezPSFq5COCyg_hywGeoH-' https://sovcqvbplrirxlzbuzte.supabase.co/auth/v1/settings)",
+      "Bash(curl -s -H 'apikey: sb_publishable_WhW5KrUcqyezPSFq5COCyg_hywGeoH-' https://sovcqvbplrirxlzbuzte.supabase.co/auth/v1/settings)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('mailer_autoconfirm:', d.get\\('mailer_autoconfirm'\\)\\); print\\('disable_signup:', d.get\\('disable_signup'\\)\\)\")",
+      "Bash(getent ahosts *)",
+      "Bash(command -v psql)",
+      "Bash(pnpm exec *)",
+      "Bash(yes)",
+      "Bash(pkill -f \"postgres-meta\")",
+      "Bash(pkill -f \"gen types\")",
+      "Bash(timeout 10 env -u ELECTRON_RUN_AS_NODE pnpm exec electron .)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('mailer_autoconfirm:', d.get\\('mailer_autoconfirm'\\), '->', 'CONFIRM OFF \\(ok p/ username login\\)' if d.get\\('mailer_autoconfirm'\\) else 'CONFIRM AINDA LIGADO — precisa desligar'\\)\")",
+      "Bash(python3 -c \"import psycopg2; print\\('psycopg2 ok'\\)\")",
+      "Bash(python3 -c \"import asyncpg; print\\('asyncpg ok'\\)\")",
+      "Bash(pnpm add *)",
+      "Bash(pnpm remove *)"
+    ]
+  }
+}
