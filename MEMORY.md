@@ -43,3 +43,38 @@ postponed.
   `supabase/{migrations,config}`.
 - Detachable panels (soundboard, assets, dice) are real OS windows — each a
   `BrowserWindow` mounting the same bundle with a different `#view=` hash.
+
+## Status (done)
+
+- **Backend**: hosted Supabase (project `sovcqvbplrirxlzbuzte`), schema + RLS via
+  `supabase/migrations` (push with `pnpm db:push`). No local Docker.
+- **Auth**: single `join(username, password)` — synthetic email
+  `<username>@tabletop.local` under the hood; "Confirm email" is OFF in the
+  dashboard (required for this).
+- **Campaigns / chapters**: full CRUD. Rename/delete restricted to the master.
+- **Invites**: by username, with re-invite-after-decline (upsert), and live via
+  Realtime (Postgres Changes on `campaign_invites`).
+- **Live session room** (`CampaignRoom` + `useCampaignRoom`):
+  - Player is locked to `session.current_chapter_id` (master picks it); no chapter
+    → "No chapter selected".
+  - Presence shows connected vs invited in the master's control room.
+  - **Session depends on the master**: `masterPresent` (Realtime Presence) gates
+    the player — master offline ⇒ "Session paused". Self-healing on crash (players
+    can't write `sessions` per RLS). Clean master leave clears the active chapter.
+- **Logging**: per-launch file in `logs/` (see [[logging-preference]] memory).
+
+## Next steps (roadmap)
+
+1. **Canvas comes alive** (current focus):
+   - Asset upload to Supabase **Storage** (tokens/maps/audio), metadata in `assets`.
+   - Persist **tokens** per chapter (`tokens` table CRUD) and render them on the r3f canvas.
+   - **Live token movement**: drag over **Broadcast** (ephemeral), commit final
+     position with one `UPDATE` on drag-end (durable). Respect `pos_locked`,
+     `is_hidden`, `not_clickable`, and per-token controllers.
+2. **Offline asset cache**: download Storage assets to disk (Electron main), encrypted, on first session join.
+3. **Dice**: 3D roll (rapier) synced via Broadcast `{notation, results, seed}`; persist to `dice_rolls`/session log.
+4. **Soundboard / audio**: `audio_tracks` pad config + Broadcast play/stop so all clients play in sync.
+5. **Turn order**: `session.turn_order` + `current_turn_index` UI; master reorders/skips. (`listMembers` repo already exists for the roster.)
+6. **Color grading driven by session**: chapter `effects` jsonb → `ColorGrade` (black & white, moods) applied for everyone.
+7. **Undo/redo**: append-only `session_events` log; apply inverse + broadcast reconcile.
+8. **Master-offline polish**: presence drop on hard crash takes a few seconds (channel timeout); consider a heartbeat / shorter timeout if needed.
